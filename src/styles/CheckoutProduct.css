@@ -8,6 +8,11 @@
   width: 180px;
   height: 180px;
   margin-right: 20px;
+  transition: transform 0.2s ease-in;
+  transform: scale(100%);
+}
+.checkoutProduct_image:hover {
+  transform: scale(105%);
 }
 
 .checkoutProduct_info {
@@ -53,4 +58,8 @@
 
 .checkoutProduct_info > button:hover {
   background-color: #9c7e30;
+}
+.checkout_link {
+  text-decoration: none;
+  color: black;
 }

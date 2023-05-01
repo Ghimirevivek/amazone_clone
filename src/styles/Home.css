@@ -18,3 +18,55 @@
   align-items: center;
   flex-wrap: wrap;
 }
+.home_navbar {
+  background-color: #161d25;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
+  color: #fff;
+}
+.home_navbar > select {
+  background-color: #161d25;
+  padding: 10px 0;
+  color: #fff;
+  border: 1px solid transparent;
+  outline: none;
+  transition: border 0.2s ease-in-out;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+.home_navbar > select > option {
+  background-color: rgb(223, 216, 216);
+  color: rgb(19, 18, 18);
+  font-weight: 600;
+  font-size: 18px;
+}
+.home_navbar > select:hover {
+  border: 1px solid white;
+}
+.home_navbar > span {
+  border: 1px solid transparent;
+  transition: border 0.2s ease-in-out;
+  border-radius: 2px;
+  margin: 0;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home_navbar > span:hover {
+  border: 1px solid white;
+}
+@media (min-width: 670px) {
+  .home_navbar > span {
+    padding: 0 10px;
+  }
+}
+@media (max-width: 375px) {
+  .home_navbar {
+    display: none;
+  }
+}

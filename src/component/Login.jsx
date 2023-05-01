@@ -18,8 +18,19 @@ const Login = () => {
       localStorage.getItem('password') !== null
     ) {
       navigate('/')
+    } else if (id.email === 'admin' && id.password === 'admin') {
+      localStorage.setItem('email', id.email)
+      localStorage.setItem('password', id.password)
+      const userName = localStorage.getItem('email')
+      const index = userName.indexOf('@')
+      const extractName = userName.slice(0, index)
+      dispatch({
+        type: 'SET_USER',
+        user: `${extractName}`,
+      })
+      navigate('/')
     } else {
-      alert('Ohh you need to register first')
+      alert('You need to register first')
     }
   }
 

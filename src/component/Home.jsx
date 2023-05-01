@@ -9,6 +9,11 @@ const Home = () => {
   const [data, setData] = useState([])
   const { firstItemIndex, lastItemIndex } = usePagination()
   const currentItems = data.slice(firstItemIndex, lastItemIndex)
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const filteredItems = selectedCategory
+    ? data.filter((item) => item.category === selectedCategory)
+    : currentItems
+
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
       .then((res) => res.json())
@@ -17,10 +22,33 @@ const Home = () => {
       })
       .catch((err) => console.log(err))
   }, [])
+
+  const handleCategoryChange = (e) => {
+    const value = e.target.value
+    setSelectedCategory(value === 'All Categories' ? '' : value)
+  }
+  //Get all unique categories
+  const categories = [...new Set(data.map((item) => item.category))]
   return (
     <div className="home">
+      <div className="home_navbar">
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          <option>All Categories</option>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+        <span>Sell</span>
+        <span>Amazon miniTV</span>
+        <span>Buy Again</span>
+        <span>Gift Cards</span>
+        <span>Sports,Fitness & Oudoors</span>
+        <span>Baby</span>
+      </div>
       <img
-        src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
+        src="https://images-eu.ssl-images-amazon.com/images/G/31/AmazonVideo/2021/X-site/Multititle/jan/Blockbuster_entertainment/EN/1500x600_Hero-Tall_01_FT._CB662389308_.jpg"
         alt="banner"
         className="home_image"
       />
@@ -29,7 +57,7 @@ const Home = () => {
           <Carousel.Item>
             <img
               className="d-block w-100 home_image"
-              src="https://images-eu.ssl-images-amazon.com/images/G/31/AmazonVideo/2021/X-site/Multititle/jan/Blockbuster_entertainment/EN/1500x600_Hero-Tall_01_FT._CB662389308_.jpg"
+              src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
               alt="slide1"
             />
           </Carousel.Item>
@@ -65,7 +93,7 @@ const Home = () => {
       </div> */}
 
       <div className="home_row">
-        {currentItems.map((item, index) => (
+        {filteredItems.map((item, index) => (
           <div key={index} className="product_container">
             <Products
               key={index}
@@ -79,7 +107,11 @@ const Home = () => {
         ))}
       </div>
       <div>
-        <Pagination totalItems={data.length} />
+        <Pagination
+          totalItems={
+            selectedCategory === '' ? data.length : filteredItems.length
+          }
+        />
       </div>
     </div>
   )

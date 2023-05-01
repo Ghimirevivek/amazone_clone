@@ -23,6 +23,29 @@ const Reducer = (state, action) => {
       return { ...state, user: action.user }
     case 'SET_BASKET':
       return { ...state, basket: action.basket }
+    case 'INCREMENT':
+      const updatedBasketIncrement = state.basket.map((item) => {
+        if (item.id === action.id) {
+          return { ...item, count: item.count + 1 }
+        } else {
+          return item
+        }
+      })
+      localStorage.setItem('basket', JSON.stringify(updatedBasketIncrement))
+      return { ...state, basket: updatedBasketIncrement }
+
+    case 'DECREMENT':
+      const updatedBasketDecrement = state.basket
+        .map((item) => {
+          if (item.id === action.id) {
+            return { ...item, count: item.count - 1 }
+          } else {
+            return item
+          }
+        })
+        .filter((item) => item.count > 0)
+      localStorage.setItem('basket', JSON.stringify(updatedBasketDecrement))
+      return { ...state, basket: updatedBasketDecrement }
     default:
       return state
   }

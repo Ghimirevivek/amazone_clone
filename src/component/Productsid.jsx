@@ -12,7 +12,7 @@ const Productsid = () => {
     fetch(`https://fakestoreapi.com/products/${params.id}`)
       .then((res) => res.json())
       .then((data) => {
-        setData(data)
+        setData({ ...data, count: 1 }) // Add count property to product object
       })
       .catch((err) => console.log(err))
   }, [params.id])
@@ -26,7 +26,21 @@ const Productsid = () => {
         price: data.price,
         rating: data.rating ? data.rating.rate : 0,
         image: data.image,
+        count: 1, // Add count property
       },
+    })
+  }
+  const increment = () => {
+    dispatch({
+      type: 'INCREMENT',
+      id: data.id,
+    })
+  }
+
+  const decrement = () => {
+    dispatch({
+      type: 'DECREMENT',
+      id: data.id,
     })
   }
   const navigate = useNavigate()
@@ -59,6 +73,11 @@ const Productsid = () => {
           <div className="product_description">
             <h2>Description</h2>
             <p>{data.description}</p>
+          </div>
+          <div>
+            <button onClick={decrement}>-</button>
+            <span>{data.count}</span>
+            <button onClick={increment}>+</button>
           </div>
           <div className="product_action">
             <button onClick={add}>Add to cart</button>
