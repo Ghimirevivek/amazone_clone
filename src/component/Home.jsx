@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react'
-import '../styles/Home.css'
-import Products from './Products'
-// import { Carousel } from 'react-bootstrap'
-import { usePagination } from '../PaginationContext'
-import Pagination from './Pagination'
+import React, { useEffect, useState } from "react";
+import "../styles/Home.css";
+import Products from "./Products";
+import { Carousel } from "react-bootstrap";
+import { usePagination } from "../PaginationContext";
+import Pagination from "./Pagination";
 
 const Home = () => {
-  const [data, setData] = useState([])
-  const { firstItemIndex, lastItemIndex } = usePagination()
-  const currentItems = data.slice(firstItemIndex, lastItemIndex)
-  const [selectedCategory, setSelectedCategory] = useState('')
+  const [data, setData] = useState([]);
+  const { firstItemIndex, lastItemIndex } = usePagination();
+  const currentItems = data.slice(firstItemIndex, lastItemIndex);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const filteredItems = selectedCategory
     ? data.filter((item) => item.category === selectedCategory)
-    : currentItems
+    : currentItems;
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
+    fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
       .then((data) => {
-        setData(data)
+        setData(data);
       })
-      .catch((err) => console.log(err))
-  }, [])
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleCategoryChange = (e) => {
-    const value = e.target.value
-    setSelectedCategory(value === 'All Categories' ? '' : value)
-  }
+    const value = e.target.value;
+    setSelectedCategory(value === "All Categories" ? "" : value);
+  };
   //Get all unique categories
-  const categories = [...new Set(data.map((item) => item.category))]
+  const categories = [...new Set(data.map((item) => item.category))];
   return (
     <div className="home">
       <div className="home_navbar">
@@ -52,7 +52,7 @@ const Home = () => {
         alt="banner"
         className="home_image"
       />
-      {/* <div className="home_image">
+      <div className="home_image">
         <Carousel>
           <Carousel.Item>
             <img
@@ -90,7 +90,7 @@ const Home = () => {
             />
           </Carousel.Item>
         </Carousel>
-      </div> */}
+      </div>
 
       <div className="home_row">
         {filteredItems.map((item, index) => (
@@ -109,12 +109,12 @@ const Home = () => {
       <div>
         <Pagination
           totalItems={
-            selectedCategory === '' ? data.length : filteredItems.length
+            selectedCategory === "" ? data.length : filteredItems.length
           }
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
