@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Header from './component/Header'
 import './styles/App.css'
-import Home from './component/Home'
-import Checkout from './component/Checkout'
-import Login from './component/Login'
-import Productsid from './component/Productsid'
 import { useStateValue } from './StateProvider'
+import { Spinner } from 'react-bootstrap'
+const Header = React.lazy(() => import('./component/Header'))
+const Checkout = React.lazy(() => import('./component/Checkout'))
+const Home = React.lazy(() => import('./component/Home'))
+const Login = React.lazy(() => import('./component/Login'))
+const Productsid = React.lazy(() => import('./component/Productsid'))
 const App = () => {
   const { dispatch } = useStateValue()
   // load saved basket from local storage
@@ -30,28 +31,40 @@ const App = () => {
 
   return (
     <>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Header />
-              <Home />
-            </>
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/:id" element={<Productsid />} />
-        <Route
-          path="/checkout"
-          element={
-            <>
-              <Header />
-              <Checkout />
-            </>
-          }
-        />
-      </Routes>
+      <Suspense
+        fallback={
+          <Spinner
+            style={{
+              position: 'absolute',
+              top: '49%',
+              left: '49%',
+            }}
+          />
+        }
+      >
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Header />
+                <Home />
+              </>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/:id" element={<Productsid />} />
+          <Route
+            path="/checkout"
+            element={
+              <>
+                <Header />
+                <Checkout />
+              </>
+            }
+          />
+        </Routes>
+      </Suspense>
     </>
   )
 }

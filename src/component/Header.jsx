@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/Header.css'
-import { Search } from '@mui/icons-material'
+import { Menu, Search } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import { ShoppingCart } from '@mui/icons-material'
 import { useStateValue } from '../StateProvider'
@@ -8,6 +8,7 @@ const Header = () => {
   const { state, dispatch } = useStateValue()
   const { basket, user } = state
   // console.log(state, dispatch)
+  const [active, setActive] = useState(true)
   const signOut = () => {
     localStorage.removeItem('email')
     localStorage.removeItem('password')
@@ -17,6 +18,19 @@ const Header = () => {
       user: null,
     })
   }
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (window.innerWidth >= 350) {
+        setActive(true)
+      } else {
+        setActive(false)
+      }
+    }, 100)
+
+    return () => {
+      clearInterval(id)
+    }
+  }, [])
 
   return (
     <nav className="header">
@@ -32,28 +46,32 @@ const Header = () => {
         <Search className="header_searchIcon" />
       </div>
       <div className="header_nav">
-        <Link to={!user && '/login'} className="header_link">
-          <div onClick={signOut} className="header_option">
-            <span className="header_option_1">
-              Hello <strong>{user}</strong>
-            </span>
-            <span className="header_option_2">
-              {!user ? 'Sign in' : 'Sign out'}
-            </span>
+        {active && (
+          <div className="nav_link_container">
+            <Link to={!user && '/login'} className="header_link">
+              <div onClick={signOut} className="header_option">
+                <span className="header_option_1">
+                  Hello <strong>{user}</strong>
+                </span>
+                <span className="header_option_2">
+                  {!user ? 'Sign in' : 'Sign out'}
+                </span>
+              </div>
+            </Link>
+            <Link to="/" className="header_link">
+              <div className="header_option">
+                <span className="header_option_1">Returns</span>
+                <span className="header_option_2">& Orders</span>
+              </div>
+            </Link>
+            <Link to="/" className="header_link">
+              <div className="header_option">
+                <span className="header_option_1">Your</span>
+                <span className="header_option_2">Prime</span>
+              </div>
+            </Link>
           </div>
-        </Link>
-        <Link to="/" className="header_link">
-          <div className="header_option">
-            <span className="header_option_1">Returns</span>
-            <span className="header_option_2">& Orders</span>
-          </div>
-        </Link>
-        <Link to="/" className="header_link">
-          <div className="header_option">
-            <span className="header_option_1">Your</span>
-            <span className="header_option_2">Prime</span>
-          </div>
-        </Link>
+        )}
         <Link to="/checkout" className="basket_link">
           <div className="header_option_basket">
             <ShoppingCart className="header_basket" />
@@ -62,6 +80,8 @@ const Header = () => {
             </span>
           </div>
         </Link>
+
+        {!active && <Menu className="navbar_listIcon" />}
       </div>
     </nav>
   )

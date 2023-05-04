@@ -81,3 +81,56 @@
   display: flex;
   align-items: center;
 }
+/* For screens with a max-width of 600px */
+@media (max-width: 600px) {
+  .header_logo {
+    width: 80px;
+    margin-top: 5px;
+  }
+  .header_searchIcon {
+    height: 25px !important;
+    width: 23px !important;
+  }
+  .header_option {
+    margin: 0 5px;
+  }
+  .header_option_1 {
+    font-size: 8px;
+  }
+  .header_option_2 {
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .header_basket_count {
+    margin: 0 3px;
+  }
+  .header_input {
+    height: 25px;
+    padding: 5px;
+    font-size: 12px;
+  }
+}
+.nav_link_container {
+  display: flex;
+}
+.navbar_listIcon {
+  color: white;
+  position: relative;
+  top: 2px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: border 0.2s ease-in;
+}
+.navbar_listIcon:hover {
+  border: 1px solid white;
+}
+@media (max-width: 200px) {
+  .header_search {
+    display: none;
+  }
+}
+@media (max-width: 150px) {
+  .header_logo {
+    margin: 0;
+  }
+}

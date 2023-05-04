@@ -26,3 +26,32 @@
   margin-top: 10px;
   color: #111;
 }
+@media (max-width: 350px) {
+  .subtotal {
+    width: 80%;
+    height: 100%;
+  }
+  .subtotal > p {
+    font-size: 12px;
+  }
+  .subtotal > small {
+    font-size: 12px;
+  }
+  .subtotal > button {
+    font-size: 12px;
+  }
+}
+@media (max-width: 265px) {
+  .subtotal {
+    height: 100%;
+  }
+  .subtotal > p {
+    font-size: 12px;
+  }
+  .subtotal > small {
+    font-size: 12px;
+  }
+  .subtotal > button {
+    font-size: 10px;
+  }
+}
