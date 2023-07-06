@@ -60,6 +60,11 @@
 }
 .home_navbar > span:hover {
   border: 1px solid white;
+  color: #0d6efd;
+}
+.home_navbar > span.active {
+  border: 1px solid white;
+  background-color: rgb(9, 62, 84);
 }
 /* .product_container {
   display: flex;
